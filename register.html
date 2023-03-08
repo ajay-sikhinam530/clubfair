@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-
+<title>Registration form</title>
 <head>
     <link rel="stylesheet" href="register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style></style>
 </head>
 
 <body>
@@ -51,16 +52,20 @@
 
         <div>
             <button id="registerBtn" type="submit">Register</button>
+            
         </div>
         <br>
         <a href="login.html">Login here</a>
     </div>
+    <div class="loadingScreen hideElement">
 
 
-
-
+    </div>
+    
     <script>
         $("#registerBtn").click(function () {
+            $(".loadingScreen").removeClass("hideElement");
+            
             console.log("Register pressed");
             if ($("#password").val() == $("#confirm_password").val()) {
                 console.log("Calling register api");
@@ -75,6 +80,8 @@
                         password: $("#password").val(),
                     },
                     success: function (result, status, xhr) {
+                        // result=JSON.parse(result);
+                        $(".loadingScreen").addClass("hideElement");
                         alert(result);
                     },
                 });

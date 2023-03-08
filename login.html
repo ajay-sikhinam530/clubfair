@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <title>login form</title>
   </head>
@@ -22,8 +26,17 @@
           <label>Password</label>
         </div>
       </form>
-      <input type="submit" value="login" id="loginBtn" /><br /><br />
+      <input type="submit" value="login" id="loginBtn" /><br /><br /><br />
       <a href="register.html">Register here</a>
+      <p id="forgetPassword">Forget Password?</p>
+    </div>
+    <div class="forgetPassword-modal hide-element">
+      <div class="forgetPassword-card">
+        <i class="fa-sharp fa-regular fa-rectangle-xmark mark"></i>
+        <label>Enter email</label><br />
+        <input type="text" id="forgetEmail" /><br />
+        <button class="resetButton">Reset</button><br />
+      </div>
     </div>
 
     <script>
@@ -35,6 +48,36 @@
           data: {
             username: $("#username").val(),
             password: $("#password").val(),
+          },
+          success: function (result, status, xhr) {
+            // console.log(result)
+            result = JSON.parse(result);
+            // console.log(result);
+            if (result.status == "true") {
+              window.location.replace("home.html");
+            } else if (result.status == "false") {
+              alert(result.message);
+            }
+          },
+        });
+      });
+
+      $("#forgetPassword").click(function () {
+        console.log("forget password pressed");
+        $(".forgetPassword-modal").removeClass("hide-element");
+      });
+      $(".mark").click(function () {
+        console.log("function called");
+        $(".forgetPassword-modal").addClass("hide-element");
+      });
+
+      $(".resetButton").click(function () {
+        console.log("reset pressed");
+        $.ajax({
+          type: "POST",
+          url: "Api/passwordHandlerApi.php",
+          data: {
+            email: $("#forgetEmail").val(),
           },
           success: function (result, status, xhr) {
             alert(result);

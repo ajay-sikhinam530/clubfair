@@ -1,67 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="home.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  </head>
-  <title>Home page</title>
-  <body>
-    <div class="container">
-      <nav class="sideBar">
-        <h1>CLUB FAIR</h1>
-        <div class="user">
-          <img src="bg-2.jpg" />
-          <h4>User name</h4>
-          <p class="mail"><b>mail : </b>abcd1234@gmail.com</p>
-          <br />
-        </div>
+    <head>
+        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <title>Home page</title>
+    <body>
+        <div class="container">
+            <nav class="sideBar">
+                <h1>CLUB FAIR</h1>
+                <div class="user">
+                    <img src="bg-2.jpg">
+                    <h4>User name</h4>
+                    <p class="mail"><b>mail : </b>abcd1234@gmail.com</p><br>
+                </div>
+                
+                <div class="items " id="dashboard">
+                    
+                        
+                        <i class="fa fa-desktop"></i>Dashboard
+                    
 
-        <div class="items" id="dashboard">
-          <a href="#">
-            <span> <i class="fa fa-desktop"></i>Dashboard</span>
-          </a>
-        </div>
+                </div>
+                
+                <div class="items inactive-item" id="userDetails">
+                    
+                        <i class="fa-solid fa-user"></i>
+                       User Details
+                    
+                </div>
 
-        <div class="items" id="userDetails">
-          <a href="#">
-            <i class="fa-solid fa-user"></i>
-            <span>User Details</span>
-          </a>
-        </div>
+                <div class="items inactive-item" id="createClub">
+                    
+                        <i class="fa-solid fa-plus"></i>
+                        Create club
+                    
+                </div>
 
-        <div class="items" id="createClub">
-          <a href="#">
-            <i class="fa-solid fa-plus"></i>
-            <span>Create club</span>
-          </a>
-        </div>
+                <div class="items inactive-item" id="joinClub">
+                    
+                        <i class="fa-solid fa-users"></i>
+                        Join Club
+                    
+                </div>
 
-        <div class="items" id="joinClub">
-          <a href="#">
-            <i class="fa-solid fa-users"></i>
-            <span>Join club</span>
-          </a>
-        </div>
+                <div class="items inactive-item" id="myClubs">
+                    
+                        <i class="fa-solid fa-list"></i>
+                        My Clubs
+                    
+                </div>
 
-        <div class="items" id="myClubs">
-          <a href="#">
-            <i class="fa-solid fa-list"></i>
-            <span>My Clubs</span>
-          </a>
+                <div class="items inactive-item" id="aboutUs">
+                    
+                        <i class="fa fa-sliders"></i>
+                        AboutUs
+                    
+                </div>
+            </nav>
         </div>
-
-        <div class="items" id="aboutUs">
-          <a href="#">
-            <i class="fa fa-sliders"></i>
-            <span>About us</span>
-          </a>
-        </div>
-      </nav>
-    </div>
-    <script src="home.js"></script>
-  </body>
+        <script src="home.js"></script>
+    </body>
 </html>

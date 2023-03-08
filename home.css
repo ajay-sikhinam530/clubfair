@@ -1,85 +1,97 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
-body {
-  background-color: rgb(189, 204, 211);
+body{
+    background-color: rgb(189, 204, 211);
 }
-.user {
-  padding-left: 10px;
-  padding-top: 25px;
+.user{
+    
+    padding-left: 10px;
+    padding-top: 25px;
 }
-.user img {
-  height: 90px;
-  width: 90px;
-  border-radius: 50px;
-  margin-left: 8px;
-  align-items: center;
-  justify-content: center;
-}
-.user h4 {
-  color: rgb(106, 106, 223);
-  padding: 5px 0;
-  font-size: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  padding-bottom: 5%;
+.user img{
+    height: 90px;
+    width: 90px;
+    border-radius: 50px;
+    margin-left: 8px;
+    align-items: center;
+    justify-content: center;
+    
+    
+} 
+.user h4{
+    color: rgb(106, 106, 223);
+    padding: 5px 0;
+    font-size: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 5%;
+
 }
 
-.sideBar {
-  position: fixed;
-  background-color: whitesmoke;
-  margin-right: 50px;
-  text-align: center;
-  height: 100vh;
-  width: 40vh;
-  align-items: center;
-  padding: 5px;
+.sideBar{
+    position: fixed;
+    background-color: whitesmoke;
+    margin-right: 50px;
+    text-align: center;
+    height: 100vh;
+    width:40vh;
+    align-items: center;
+    padding: 5px;
 }
 
-.items {
-  margin-bottom: 5%;
-  text-decoration: none;
-  padding-bottom: 3.5%;
-  padding-top: 3.5%;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 25px;
-  border-radius: 80em;
 
-  opacity: 50%;
-  outline: none;
-}
-.items a {
-  text-decoration: none;
-  color: black;
-}
 
-.items:hover {
-  background-color: lightblue;
-  padding-right: 10px;
-  transition: 0.5s;
+.items{
+    margin-bottom: 5%;
+    text-decoration: none;
+    padding-bottom: 3.5%;
+    padding-top: 3.5%;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 25px; 
+    border-radius: 80em;
+    cursor: pointer;
+    opacity:50%;
+    outline: none;
+    
+}
+.items a{
+    text-decoration: none;
+    color: black;
 }
 
-.active-item {
-  background-color: rgb(32, 155, 204);
+.inactive-item:hover {
+    
+    background-color:lightblue;
+    padding-right:10px;
+    transition: 0.5s;
+    
 }
 
-.sideBar p {
-  padding-bottom: 7%;
-  color: black;
-  font-size: 95%;
+.active-item{
+    background-color:rgb(32, 155, 204);
+
 }
 
-.sideBar h1 {
-  padding-top: 10%;
-  padding-left: 10%;
-  color: rgb(106, 106, 223);
+.sideBar p{
+    padding-bottom: 7%;
+    color: black;
+    font-size: 95%;
+
 }
 
-.items a i {
-  color: black;
-  display: inline-block;
-  padding-right: 10px;
-  font-size: 17px;
+
+.sideBar h1{
+    padding-top: 10%;
+    padding-left: 10%;
+    color: rgb(106, 106, 223) ;
+}
+
+.items a i{
+    color: black;
+    display: inline-block;
+    padding-right: 10px;
+    font-size: 17px;
 }
