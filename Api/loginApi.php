@@ -8,13 +8,12 @@ $response->status="";
 $response->message="";
 
 
-$userNameCheck="SELECT isActive,Password from registereduserdetails where Email='$username'";
+$userNameCheck="SELECT * from registereduserdetails where Email='$username'";
 $result=mysqli_query( $connection,$userNameCheck);
 
 if($result->num_rows==1)
 {
     $row=$result->fetch_assoc();
-
     if($row['isActive']==1)
     {
         $passwordCheck=password_verify($password,$row['Password']);
@@ -22,6 +21,9 @@ if($result->num_rows==1)
         {
             $response->status="true";
             $response->message="login successful";
+            session_start();
+            $_SESSION['USER'] = $row;
+            
         }
         else
         {
@@ -44,7 +46,6 @@ elseif($result->num_rows==0)
 }
 $response=json_encode($response);
 echo "$response";
-
 
 
 ?>

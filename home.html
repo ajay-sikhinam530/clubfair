@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="home.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        
     </head>
     <title>Home page</title>
     <body>
@@ -11,12 +12,12 @@
             <nav class="sideBar">
                 <h1>CLUB FAIR</h1>
                 <div class="user">
-                    <img src="bg-2.jpg">
-                    <h4>User name</h4>
-                    <p class="mail"><b>mail : </b>abcd1234@gmail.com</p><br>
+                    <img src="" id="userImage">
+                    <h4 id="userName"></h4>
+                    <p class="mail"><b>mail : </b><span id="userEmail"></span></p><br>
                 </div>
                 
-                <div class="items " id="dashboard">
+                <div class="items active-item" id="dashboard">
                     
                         
                         <i class="fa fa-desktop"></i>Dashboard
@@ -59,7 +60,141 @@
                     
                 </div>
             </nav>
+        
+         <div class="firstcard">
+            <button class="logout-button" onclick="logoutUser()">Logout</button>
+         </div>
+
+        <div class="dashboardTab tab">
+            <div class="dashboardCard" id="dashboardCard">
+                <div class="dashboard-clubCard" id="XXXX">
+                    <div style="display: flex;">
+                        <div class="dashboard-clubDetails">
+                            <div><h5>Name:</h5>XXXX</div>
+                            <div><h5>Club Id:</h5>XXXX</div><br>
+                            <div><h5>Category:</h5>XXXX</div>
+                            <div><h5>Total Members:</h5>XXXX</div><br>
+                            <div><h5>Description:</h5></div><p>XXXX</p>
+                        </div>
+                        <div class="dashboard-clubOperations">
+                            <button>Join Club</button>
+                        </div>
+                    </div>
+                    <div class="dashboard-clubOwner">
+                        <h5>Created By: </h5>
+                        <span>Ajay kumar Sikhinam</span>
+                        <img src="./Api/ProfilePictures/empty.jpg" alt="">
+                    </div>
+                </div>
+                
+            </div>
+            <div>
+                <div class="dashboard-eventCard">For any upcoming events</div>
+                <div class="dashboard-notificationCard">For the notifications or Filters</div>
+            </div>
         </div>
-        <script src="home.js"></script>
+
+        <div class="userDetailsTab tab" id="details">     
+                    <div class="secondcard"></div>
+                    <div class=" thirdcard">
+                        <div class="personal-details" ></br></br>
+                         <h class="thirdcard-heading"> Personal Information</h></br></br>
+                            <hr/>
+                            
+                            <div class="userdetails">
+                            <form>
+                                <label class="text-field">FirstName:</label></br>
+                                <input type="text" id="firstname" placeholder="Enter firstName" ></br></br>
+                                <label class="text-field">LastName:</label></br>
+                                <input type="text" id="lastname" placeholder="Enter LastName"></br></br>                       
+                                <label class="text-field">Phone:</label></br>
+                                <input type="text" id="phone" placeholder="Enter phone number" ></br></br>
+                                <label class="text-field">Email:</label></br>
+                                <input type="text" id="email" placeholder="abcd1234@gmail.com" readonly="readonly"></br>
+                            </form>
+                            
+                            </div></br>
+                                <div class="options" >   
+                                   
+                                    <form class="birthday-date"></br>
+                                        <label>Date of Birth:</label></br>
+                                        <input type="date"name="birthday" id="DOB">
+                                    </form></br>
+                                    <label class="upload-file">ProfilePicture:</label></br>
+                                    <input type="file" id="uploadPicture" name="files">
+                                        
+                                </div>
+                                <button class="update-button" onclick="updateUserDetails()">Update</button>
+                        </div>
+                                <div class="fourthcard" id="fourth">
+                                    <p>Interests:</p>
+                                    <div class="multiselect-dropdown">
+                                        <i class="fa-solid fa-chevron-down icon"></i>
+                                        <div class="selectedList-container"></div>
+                                        <ul class="menu">
+                                            <li>Technical</li>
+                                            <li>Dance</li>
+                                            <li>Singimg</li>
+                                            <li>Yoga</li>
+                                            <li>Painting</li>
+                                            <li>TeachingSub</li>
+                                    </div>
+                                </div>
+                    </div>          
+        </div>
+
+        <div class="createClubTab tab">
+            <div class="secondcard"></div> 
+            <div class="createclub-card">
+                <div class="clubname-details">
+                    <label class="clubname">Club Name:</label></br>
+                    <input type="text" id="clubname" placeholder="Enter Clubname" class="club-description"></br>
+                    <p class="category">Category:</p>
+                    <select class="category-choose" id="selectCategory">
+                    <option  disabled selected>Choose your category:</option>
+                    <option id="technical">Technical Yoga</option>
+                    <option id="dancing">Dance</option>
+                    <option id="singing">Singing</option>
+                    <option id="drawing">Drawing</option>
+                    <option id="painting">Painting</option>
+                    </select>
+                    <p class="Description">Description:</p>
+                    <textarea name="" id="Description" cols="50" rows="8"></textarea></br>
+                    <button class="createclub-button" onclick="handleCreateClub()">CreateClub</button>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="joinClubTab tab">
+            <div class="secondcard"></div>
+            <div class="joinClubMain">
+                <div class="joinClub">
+                    <br>
+                    <label class="joinclub-id" ><h>Club Id:</h></label><br>
+                    <input type="text" id="joinInput" placeholder="Enter club Id"><br>
+                    
+                    <button class="getclub-button" id="getClubButton" onclick="getClubDetails()">Get Club</button>
+                    <button class="JoinClubButton" id="joinClubButton" onclick="joinClub()">Join Club</button>
+                    
+                </div>
+                <div class="joinCard2">
+                    <h3>Club Details</h3>
+                    <span>Name:</span><span id="reqName"></span><br>
+                    <span>Owner:</span><span id="reqOwner"></span><br>
+                    <span>Category:</span><span id="reqCategory"></span><br>
+                    <span>Description:</span><span id="reqDescription"></span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="myClubsTab tab">
+            <div class="secondcard"></div>
+            <div class="myClubsCard" id="myClubsCard"></div>
+        </div>
+
+
+<script src="home.js"></script>
+        
     </body>
 </html>

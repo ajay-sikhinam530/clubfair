@@ -1,97 +1,658 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
-body{
-    background-color: rgb(189, 204, 211);
+body {
+  background-color: rgb(189, 204, 211);
 }
-.user{
-    
-    padding-left: 10px;
-    padding-top: 25px;
+.user {
+  padding-left: 10px;
+  padding-top: 25px;
 }
-.user img{
-    height: 90px;
-    width: 90px;
-    border-radius: 50px;
-    margin-left: 8px;
-    align-items: center;
-    justify-content: center;
-    
-    
-} 
-.user h4{
-    color: rgb(106, 106, 223);
-    padding: 5px 0;
-    font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-bottom: 5%;
-
+.user img {
+  height: 90px;
+  width: 90px;
+  border-radius: 50px;
+  margin-left: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.user h4 {
+  color: rgb(106, 106, 223);
+  padding: 5px 0;
+  font-size: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-bottom: 5%;
 }
 
-.sideBar{
-    position: fixed;
-    background-color: whitesmoke;
-    margin-right: 50px;
-    text-align: center;
-    height: 100vh;
-    width:40vh;
-    align-items: center;
-    padding: 5px;
+.sideBar {
+  position: fixed;
+  background-color: white;
+  margin-right: 50px;
+  text-align: center;
+  height: 100vh;
+  width: 40vh;
+  align-items: center;
+  padding: 5px;
 }
 
-
-
-.items{
-    margin-bottom: 5%;
-    text-decoration: none;
-    padding-bottom: 3.5%;
-    padding-top: 3.5%;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 25px; 
-    border-radius: 80em;
-    cursor: pointer;
-    opacity:50%;
-    outline: none;
-    
+.items {
+  margin-bottom: 5%;
+  text-decoration: none;
+  padding-bottom: 3.5%;
+  padding-top: 3.5%;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 25px;
+  border-radius: 80em;
+  cursor: pointer;
+  opacity: 50%;
+  outline: none;
 }
-.items a{
-    text-decoration: none;
-    color: black;
+.items a {
+  text-decoration: none;
+  color: black;
 }
 
 .inactive-item:hover {
-    
-    background-color:lightblue;
-    padding-right:10px;
-    transition: 0.5s;
-    
+  background-color: lightblue;
+  padding-right: 10px;
+  transition: 0.5s;
 }
 
-.active-item{
-    background-color:rgb(32, 155, 204);
-
+.active-item {
+  background-color: rgb(32, 155, 204);
 }
 
-.sideBar p{
-    padding-bottom: 7%;
-    color: black;
-    font-size: 95%;
+.sideBar p {
+  padding-bottom: 7%;
+  color: black;
+  font-size: 95%;
+}
 
+.sideBar h1 {
+  padding-top: 10%;
+  padding-left: 10%;
+  color: rgb(106, 106, 223);
+}
+
+.items a i {
+  color: black;
+  display: inline-block;
+  padding-right: 10px;
+  font-size: 17px;
+}
+.mainCard {
+  margin-top: 0.2%;
+  margin-bottom: 0.2%;
+}
+
+.firstcard {
+  position: sticky;
+  top: 1px;
+  background-color: white;
+  margin-left: 275px;
+  margin-right: 13px;
+  height: 10vh;
+  border-radius: 5px;
+  z-index: 2;
+}
+.secondcard {
+  background-color: white;
+  margin-left: 275px;
+  margin-right: 13px;
+  height: 20vh;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.thirdcard {
+  display: flex;
+}
+.personal-details {
+  background-color: white;
+  margin-left: 260px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  height: 73vh;
+  width: 45%;
+  display: flexbox;
+}
+.thirdcard-heading {
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 20px;
+  font-family: "roboto";
+  color: blue;
+}
+.userdetails {
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  float: left;
+}
+
+.text-field {
+  font-family: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+input {
+  margin-top: 0.7em;
+}
+
+form input {
+  width: 250px;
+  height: 30px;
+  padding-top: 5px;
+  padding-left: 10px;
+  font-family: sans-serif;
+  font-size: 15px;
+  color: gray;
+  padding-top: 2px;
+  background-color: rgb(255, 255, 255, 0.07);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 5px #a4a6adf1, inset -5px -5px 10px #ffffff67;
+  border: none;
+}
+.options {
+  font-size: 17px;
+  float: right;
+}
+
+.options label {
+  font-family: none;
+  font-size: 20px;
+}
+.upload-file {
+  font-family: none;
+  font-weight: bold;
+  font-size: 19px;
+}
+.choose-interest {
+  margin-left: 3%;
+  margin-top: 1%;
+  width: 20em;
+  height: 2em;
+  font-size: 1em;
+}
+.birthday-date {
+  font-family: none;
+  font-weight: bold;
+  /* margin-top: 20%; */
+  padding: 7px;
+  padding-left: 1px;
+}
+.fourthcard {
+  background-color: white;
+  width: 36%;
+  margin-left: 0px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 13px;
+}
+
+.fourthcard p {
+  margin-left: 4%;
+  margin-top: 5%;
+  font-size: 21px;
+  font-family: none;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.hide-element {
+  display: none;
+}
+
+.update-button {
+  color: white;
+  background-color: #4c63b6;
+  font-family: "Roboto";
+  font-size: 18px;
+  border-width: 0px;
+  border-radius: 1.5625em;
+
+  margin-left: 20em;
+  float: top;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.createclub-card {
+  background-color: white;
+  margin-left: 275px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  height: 66vh;
+  width: 45%;
+}
+.clubname-details label {
+  font-size: 20px;
+  font-family: none;
+  font-weight: bold;
+}
+.category-choose {
+  color: gray;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.joinClub {
+  background-color: white;
+  margin-left: 260px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  height: 66vh;
+  width: 100vh;
+  padding-left: 1%;
+}
+
+.joinclub-id {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: none;
+  margin-left: 3em;
+}
+
+#joinInput {
+  margin-top: 2%;
+  margin-left: 3.5em;
+  width: 20em;
+  height: 2em;
+  font-size: 16px;
+  padding-left: 10px;
+  background-color: rgb(255, 255, 255, 0.07);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 5px #a4a6adf1, inset -5px -5px 10px #ffffff67;
+  border: none;
+}
+#joinInput:focus {
+  outline: none;
+  border: 2px solid rgb(185, 188, 225);
+}
+.joinClub {
+  padding-left: 77px;
+  padding-top: 95px;
+}
+
+.JoinClubButton {
+  color: white;
+  background-color: #4c63b6;
+  font-family: "Roboto";
+  font-size: 18px;
+  border-width: 0px;
+  border-radius: 1.5625em;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 2em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.joinCard2 {
+  background-color: white;
+  width: 36%;
+  margin-left: 0px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 13px;
+  padding-left: 1%;
+}
+
+.joinClubMain {
+  padding: 0px;
+  display: flex;
+}
+
+.createclub-card {
+  background-color: white;
+  margin-left: 260px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  height: 66vh;
+  width: 80%;
+}
+.clubname-details {
+  padding-left: 20px;
+  padding-top: 15px;
+}
+
+#clubname {
+  width: 250px;
+  height: 30px;
+  font-size: 14px;
+  font-family: sans-serif;
+  padding-left: 5px;
+  background-color: rgb(255, 255, 255, 0.07);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 5px #a4a6adf1, inset -5px -5px 10px #ffffff67;
+  border: none;
+}
+
+#clubname:focus {
+  outline: none;
+  border: 2px solid rgb(185, 188, 225);
+}
+.category {
+  font-size: 20px;
+  font-family: none;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.category-choose {
+  color: gray;
+  /* width:250px;
+    height: 33px; */
+  font-size: 15px;
+  width: 250px;
+  height: 30px;
+  background-color: rgb(255, 255, 255, 0.07);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 5px #a4a6adf1, inset -5px -5px 10px #ffffff67;
+  border: none;
+}
+.category-choose:focus {
+  outline: none;
+  border: 2px solid rgb(185, 188, 225);
+}
+.Description {
+  font-size: 20px;
+  font-family: none;
+  padding-top: 15px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#Description {
+  font-size: 15px;
+  padding-top: 5px;
+  padding-left: 5px;
+  font-family: sans-serif;
+  background-color: rgb(255, 255, 255, 0.07);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 5px #a4a6adf1, inset -5px -5px 10px #ffffff67;
+  border: none;
+}
+#Description:focus {
+  outline: none;
+  border: 2px solid rgb(185, 188, 225);
+}
+.createclub-button {
+  color: white;
+  background-color: #4c63b6;
+  font-family: "Roboto";
+  font-size: 18px;
+  border-radius: 1.5625em;
+  border-width: 0px;
+  margin-left: 5px;
+  margin-top: 20px;
+  width: 7em;
+  height: 2em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.getclub-button {
+  color: white;
+  background-color: #4c63b6;
+  font-family: "Roboto";
+  font-size: 18px;
+  border-width: 0px;
+  border-radius: 1.5625em;
+  margin-top: 50px;
+  margin-left: 5em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.multiselect-dropdown {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  height: 70px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px #aaa;
+  font-family: sans-serif;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.icon {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.menu {
+  list-style-type: none;
+  width: 100%;
+  top: 120%;
+  position: absolute;
+  border-radius: inherit;
+  box-shadow: 0 2px 5px #aaa;
+  height: 0em;
+  cursor: pointer;
+  overflow-y: scroll;
+  background-color: #fff;
+}
+
+.menu li {
+  padding: 1em;
+}
+
+.multiselect-dropdown.show .menu {
+  height: 250px;
+}
+
+.selectedList-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  padding: 0.1em;
+}
+
+.selectedItem {
+  position: relative;
+  border: 2px solid gray;
+  padding: 0.1em 0.75em 0.1em 0.75em;
+  height: 35px;
+  border-radius: inherit;
+  margin: 0.25em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: zoomIn 350ms ease-in-out 1;
+}
+
+/* puja */
+.logout-button {
+  color: white;
+  background-color: #4c63b6;
+  font-family: "Roboto";
+  font-size: 18px;
+  border-width: 0px;
+  border-radius: 1.5625em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-left: 90%;
+  margin-top: 10px;
+}
+
+/* #firstname #lastname #email #phone #date:focus{
+    border: 2px solid  rgb(185, 188, 225);
+    outline: none;
+} */
+
+#firstname:focus {
+  border: 2px solid rgb(185, 188, 225);
+  outline: none;
+}
+
+#lastname:focus {
+  border: 2px solid rgb(185, 188, 225);
+  outline: none;
+}
+
+#email:focus {
+  border: 2px solid rgb(185, 188, 225);
+  outline: none;
+}
+
+#phone:focus {
+  border: 2px solid rgb(185, 188, 225);
+  outline: none;
+}
+
+#bdayDate:focus {
+  border: 2px solid rgb(185, 188, 225);
+  outline: none;
+}
+
+.myClubsCard {
+  position: absolute;
+  background-color: white;
+  margin-left: 275px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 66vh;
+  width: 79%;
+}
+
+.my_club {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: rgb(237, 235, 185);
+  width: 95%;
+  border: 0.1em solid black;
+  height: 8em;
+  margin: 2.5%;
+}
+
+.dashboardTab{
+  display: flex;
+}
+
+.dashboardCard{
+  background-color: white;
+  margin-left: 275px;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 87vh;
+  width: 55%;
+}
+
+.dashboard-clubCard{
+  background-color: rgb(238, 238, 167);
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  padding: 0 10px 0 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  min-height: 40vh;
+  width: 95%;
+  /* overflow: hidden; */
+}
+
+.dashboard-clubDetails{
+  position: relative;
+  background-color: rgb(235, 207, 207);
+  margin-top: 10px;
+  min-height: 29vh;
+  padding-top: 10px;
+  width: 70%;
+}
+.dashboard-clubDetails h5{
+  display: inline-block;
+  margin-left: 5px;
+}
+.dashboard-clubDetails div{
+  display: inline-block;
+  margin-left: 0.7em;
+  height: 17%;
+  width: 40%;
+}
+.dashboard-clubDetails p{
+  margin: 0px 20px;
+  word-wrap: break-word;
+}
+
+.dashboard-clubOperations{
+  position: relative;
+  background-color: rgb(217, 217, 240);
+  margin-top: 10px;
+  min-height: 29vh;
+  width: 30%;
+}
+
+.dashboard-clubOwner{
+  position: relative;
+  display: flex;
+  background-color: beige;
+  padding-left: 0;
+  min-height: 8vh;
+  width: 100%;
+  align-items: center;
+  justify-content: right;
+}
+
+.dashboard-clubOwner img{
+  height: 50px;
+  width: 50px;
+  border: 2px solid rgb(231, 69, 102);
+  border-radius: 50px;
+  margin-left: 8px;
+  align-items: center;
+  justify-content: center;
 }
 
 
-.sideBar h1{
-    padding-top: 10%;
-    padding-left: 10%;
-    color: rgb(106, 106, 223) ;
+
+
+
+
+
+
+
+.dashboard-eventCard{
+  position: fixed;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 43vh;
+  width: 310px;
 }
 
-.items a i{
-    color: black;
-    display: inline-block;
-    padding-right: 10px;
-    font-size: 17px;
+.dashboard-notificationCard{
+  position: fixed;
+  top: 55%;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 43vh;
+  width: 310px;
 }
