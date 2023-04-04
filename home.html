@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="home.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        
+        <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
     </head>
     <title>Home page</title>
     <body>
@@ -189,8 +189,38 @@
         </div>
     
         <div class="myClubsTab tab">
-            <div class="secondcard"></div>
             <div class="myClubsCard" id="myClubsCard"></div>
+            <div id="myClubEnteredTab">
+                <div style="display: flex;position: absolute;margin-left: 275px;min-height: 87vh;width: 79%;"> 
+                    <div class="tripleTabCard">
+                        <div class="tabHeadWrapper-club" >
+                            <div class="clubitem activeClub-item" id="chatRoomTab" >Chat Room</div>
+                            <div class="clubitem" id="eventsTab" >Events</div>
+                            <div class="clubitem" id="extrasTab" >Extras</div>
+                            <button onclick="closeClub()"><img src="./frontEndResources/closeIcon.png" alt="close"></button>
+                        </div>
+                        <div class="clubTab" id="chatbox">
+                            <div class="chatboxHeader" id="chatboxHeader">Club: XXXX</div>
+                            <div class="chatboxBody" id="chatboxBody" >
+                                <div id="anchor"></div>
+                            </div>
+                            <div class="chatboxFooter">
+                                <textarea name="TextMessage" id="TextMessage"></textarea>
+                                <button onclick="sendMessageToClub()"><img src="./frontEndResources/sendIcon.png" alt="SendMessage"></button>
+                            </div>
+                        </div>
+                        <div class="clubTab inactiveClub-tab" id="clubEvents">
+                            Club Events
+                        </div>
+                        <div class="clubTab inactiveClub-tab" id="clubExtras" >
+                            Club Extras
+                        </div>
+                    </div>
+                    <div class="activeUsersCard">
+                        <h3>Active Users</h3>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

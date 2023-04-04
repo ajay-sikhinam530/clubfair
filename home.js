@@ -1,5 +1,22 @@
+//Global Declarations Start
 var currentUser;
+
+var items = document.querySelectorAll(".items");
+
+var allClubItems = document.querySelectorAll(".clubitem");
+
+var curActiveClub = {
+	Id: "",
+	Name: "",
+	AllMessages: []
+};
+
+var IntervalId;
+//Global Declarations End
+
+
 $(".tab").hide();
+
 async function setCurrentUser() {
 	let response;
 	await $.ajax({
@@ -23,14 +40,14 @@ async function setCurrentUser() {
 	}
 
 }
+
 setCurrentUser().then(() => {
 	console.log("Current user Details :", currentUser);
 	//To initialize dashboard by default on entering home page
 	$(".dashboardTab").show();
 	dashboardFeed();
+	// $(".myClubsTab").show();
 });
-
-var items = document.querySelectorAll(".items");
 
 let makeActive = function (event) {
 	//console.log(event) ;
@@ -41,6 +58,10 @@ let makeActive = function (event) {
 		$(".tab").hide();
 	});
 	let currentId = event.target.id;
+	if (currentId != "myClubs") {
+		console.log("Not myclubs");
+		clearInterval(IntervalId);
+	}
 	//console.log(event.target);
 	document.getElementById(currentId).classList.remove("inactive-item");
 	document.getElementById(currentId).classList.add("active-item");
@@ -61,17 +82,51 @@ let makeActive = function (event) {
 			$(".joinClubTab").show();
 			break;
 		case "myClubs":
+			$("#myClubEnteredTab").hide();
 			$(".myClubsTab").show();
+			$(".myClubsCard").show();
 			displayMemberClubs();
 		default:
 			break;
 	}
 };
 
-for (let i = 0; i < items.length; i++) {
-	items[i].addEventListener("click", makeActive);
+let makeClubTabActive = function (event) {
+	let targetId = event.target.id;
+	allClubItems.forEach(item => {
+		item.classList.remove("activeClub-item");
+		if (item.id == targetId) {
+			item.classList.add("activeClub-item");
+		}
+	});
+	document.querySelectorAll(".clubTab").forEach(tab => {
+		tab.classList.add("inactiveClub-tab");
+	});
+	switch (targetId) {
+		case "chatRoomTab":
+			document.getElementById("chatbox").classList.remove("inactiveClub-tab");
+			break;
+		case "eventsTab":
+			document.getElementById("clubEvents").classList.remove("inactiveClub-tab");
+			break;
+		case "extrasTab":
+			document.getElementById("clubExtras").classList.remove("inactiveClub-tab");
+			break;
+		default:
+			break;
+	}
+
 }
 
+allClubItems.forEach(item => {
+	item.addEventListener("click", makeClubTabActive);
+});
+
+items.forEach(item => {
+	item.addEventListener("click", makeActive);
+});
+
+//Multiselect in update form Code START
 let dropdown = document.querySelector(".multiselect-dropdown");
 let menu = document.querySelector(".menu");
 let listContainer = document.querySelector(".selectedList-container");
@@ -112,6 +167,7 @@ function deleteItem(event) {
 	selectedItems.pop(item.innerText);
 	item.remove();
 }
+// Multiselect in update form Code END
 
 //Written by ajay
 
@@ -185,7 +241,6 @@ async function displayMemberClubs() {
 			UserId: currentUser.Id,
 		},
 		success: async function (result, status, xhr) {
-			console.log(result);
 			response = JSON.parse(result);
 		},
 	});
@@ -205,12 +260,136 @@ async function displayMemberClubs() {
             <span>Category:</span><span id="my_clubCategory-${club.Id}">${club.Categories}</span><br>
             <span>Description:</span><span id="my_clubDescription-${club.Id}">${club.Description}</span>
         </div>
-        <button id="my_clubEnter-${club.Id}">Enter</button>
+        <button id="my_clubEnter-${club.Id}" onclick="enterClub(this.id)">Enter</button>
+		<button id="my_clubLeave-${club.Id}">Leave</button>
     `;
 
 			myClubsCard.appendChild(clubElement);
 		});
 	}
+}
+
+async function enterClub(elementId) {
+	let clubId = elementId.slice(13);
+	currentInteractiveClub = clubId
+	console.log("Entering Club - ", clubId);
+	$('#myClubsCard').hide();
+	$("#myClubEnteredTab").show();
+	allClubItems = document.querySelectorAll(".clubitem");
+	allClubItems.forEach(item => {
+		item.addEventListener("click", makeClubTabActive);
+	});
+
+	if (curActiveClub.Id != clubId) {
+		//Changing Glocal active club to the new one
+
+		curActiveClub.Id = clubId;
+		curActiveClub.Name = document.getElementById(`my_clubName-${clubId}`).innerText;
+		curActiveClub.AllMessages = [];
+		document.getElementById("chatboxBody").innerHTML = "";
+		console.log("Active Club Changed ->", curActiveClub);
+
+		document.getElementById("chatboxHeader").innerHTML = curActiveClub.Name;
+	}
+
+	IntervalId = window.setInterval(loadAllClubMessages, 4000);
+
+}
+
+async function sendMessageToClub() {
+	let messageText = document.getElementById("TextMessage").value;
+	let dateObject = new Date();
+	//dateObject.getHours() + "." + dateObject.getMinutes() + "." + dateObject.getSeconds();
+	// To add time in hours
+	let time = ((dateObject.getHours().toString().length == 1) ? "0" + dateObject.getHours().toString() : dateObject.getHours().toString()) + ".";
+	//To add time in minutes
+	time += ((dateObject.getMinutes().toString().length == 1) ? "0" + dateObject.getMinutes().toString() : dateObject.getMinutes().toString()) + ".";
+	//To add time in seconds
+	time += dateObject.getSeconds();
+	// To add date
+	let date = ((dateObject.getDate().toString().length == 1) ? "0" + dateObject.getDate().toString() : dateObject.getDate().toString()) + ":";
+	//To add month
+	date += (((Number(dateObject.getMonth()) + 1).toString().length == 1) ? "0" + (Number(dateObject.getMonth()) + 1) : (Number(dateObject.getMonth()) + 1)) + ":"
+	//To add year
+	date += dateObject.getFullYear();
+	let timeStamp = time + "/" + date;
+	let curMessageObj = {
+		Message: messageText,
+		ClubId: curActiveClub.Id,
+		UserId: currentUser.Id,
+		UserPic: currentUser.ProfilePic,
+		UserName: currentUser.FirstName + " " + currentUser.LastName,
+		TimeStamp: timeStamp
+	}
+	console.log(curMessageObj);
+	if (messageText != "") {
+		console.log("Message", messageText);
+		await $.ajax({
+			type: "POST",
+			url: "Api/insertMessage.php",
+			data: curMessageObj,
+			success: async function (result, status, xhr) {
+				result = JSON.parse(result);
+				if (result.status == 'true') {
+					document.getElementById("TextMessage").value = '';
+					curMessageObj['Id'] = result.Id;
+					appendMessageToChatBox(curMessageObj);
+				}
+			},
+		});
+
+	}
+}
+
+async function appendMessageToChatBox(messageObj) {
+	curActiveClub.AllMessages.push(messageObj);
+	// console.log("Appending message", curActiveClub);
+	let message = document.createElement("div");
+	message.classList.add("message");
+	if (messageObj.UserId == currentUser.Id) {
+		message.classList.add("sentMessage");
+	}
+	message.innerHTML = `
+		<img src="${messageObj.UserPic}"">
+		<div class="messageText">
+			<span>${messageObj.UserName}</span>
+				<p>${messageObj.Message}</p>
+			<span class="timeStamp">${(messageObj.TimeStamp).slice(0, 5) + " " + (messageObj.TimeStamp).slice(8)}</span>
+		</div>
+	`;
+
+	document.getElementById("chatboxBody").insertBefore(message, document.getElementById("chatboxBody").firstChild);
+
+	var chatboxBody = document.getElementById('chatboxBody');
+	chatboxBody.scrollTop = chatboxBody.scrollHeight;
+
+}
+
+async function loadAllClubMessages() {
+	let response;
+	await $.ajax({
+		type: "POST",
+		url: "Api/getAllMessagesOfClub.php",
+		data: {
+			ClubId: curActiveClub.Id
+		},
+		success: async function (result, status, xhr) {
+			response = JSON.parse(result);
+
+		},
+	});
+	// console.log("LoadingClub", response);
+	let receivedMessages = response.messages;
+
+	for (let i = curActiveClub.AllMessages.length; i < receivedMessages.length; i++) {
+		appendMessageToChatBox(receivedMessages[i]);
+	}
+}
+
+async function closeClub() {
+	$("#myClubEnteredTab").hide();
+	$("#myClubsCard").show();
+
 }
 
 async function updateUserDetails() {
@@ -278,7 +457,6 @@ async function setFiledsInUpdateForm() {
 	document.getElementById("email").value = currentUser.Email;
 	document.getElementById("DOB").value = currentUser.DateOfBirth;
 	selectedItems = JSON.parse(currentUser.Interests);
-	console.log(selectedItems);
 	selectedItems.forEach(item => {
 		showSelectedItems(item);
 	});
@@ -307,7 +485,7 @@ async function dashboardFeed() {
 		},
 		success: async function (result, status, xhr) {
 			let response = JSON.parse(result);
-			console.log(response);
+			console.log("Dashboard Feed ", response);
 			if (response.status == "true") {
 				clubs = response.clubs;
 			}

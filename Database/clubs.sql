@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2023 at 11:33 AM
+-- Generation Time: Apr 04, 2023 at 05:12 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -88,7 +88,10 @@ INSERT INTO `memberclubs` (`UserId`, `ClubId`, `Id`) VALUES
 ('1', '1', 1),
 ('1', '2', 2),
 ('2', '3', 3),
-('4', '4', 5);
+('4', '4', 5),
+('5', '3', 6),
+('5', '1', 7),
+('4', '2', 8);
 
 -- --------------------------------------------------------
 
@@ -101,18 +104,10 @@ CREATE TABLE `messages` (
   `Message` varchar(255) NOT NULL,
   `ClubId` varchar(255) NOT NULL,
   `UserId` varchar(255) NOT NULL,
-  `Timestamp` datetime NOT NULL DEFAULT current_timestamp()
+  `UserName` varchar(255) NOT NULL,
+  `UserPic` varchar(255) NOT NULL,
+  `TimeStamp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`Id`, `Message`, `ClubId`, `UserId`, `Timestamp`) VALUES
-(1, 'ynHrjeXC', '12', '124', '2023-03-10 00:00:00'),
-(2, '', '', '', '2023-03-10 00:00:00'),
-(3, '', '', '', '2023-03-10 00:00:00'),
-(4, '', '', '', '2023-03-10 14:40:37');
 
 -- --------------------------------------------------------
 
@@ -198,13 +193,13 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `memberclubs`
 --
 ALTER TABLE `memberclubs`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `registereduserdetails`
