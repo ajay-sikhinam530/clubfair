@@ -561,6 +561,62 @@ form input {
   margin-left: 10px;
 }
 
+.activeUsersCard h3 {
+  margin: 2% 0 2% 0;
+  text-align: center;
+  color: rgb(20, 153, 20);
+}
+
+.usersWrapper {
+  width: 96%;
+  height: 92%;
+  margin: 2%;
+  background-color: beige;
+  overflow-y: auto;
+}
+.activeUsersWrapper {
+  background-color: beige;
+}
+.inactiveUsersWrapper {
+  background-color: beige;
+}
+
+.clubMember {
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+}
+.clubMember img {
+  height: 40px;
+  width: 40px;
+  border: 1px solid rgb(65, 61, 62);
+  border-radius: 30px;
+  margin: 4px;
+}
+
+.userStatus {
+  position: relative;
+  left: 7%;
+  top: 8px;
+  width: 15px;
+  height: 15px;
+  background-color: rgb(90, 231, 90);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.644);
+}
+
+.inactiveUsersWrapper .userStatus {
+  background-color: rgb(235, 167, 78);
+}
+
+.usersWrapper::-webkit-scrollbar {
+  width: 3px;
+}
+
+.usersWrapper::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+}
+
 .tripleTabCard {
   height: 87vh;
   width: 70%;
@@ -692,7 +748,7 @@ form input {
 }
 /* For ScrollBar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -701,6 +757,7 @@ form input {
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

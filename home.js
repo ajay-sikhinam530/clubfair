@@ -8,12 +8,12 @@ var allClubItems = document.querySelectorAll(".clubitem");
 var curActiveClub = {
 	Id: "",
 	Name: "",
-	AllMessages: []
+	AllMessages: [],
+	AllMembers: []
 };
 
 var IntervalId;
 //Global Declarations End
-
 
 $(".tab").hide();
 
@@ -41,13 +41,48 @@ async function setCurrentUser() {
 
 }
 
-setCurrentUser().then(() => {
-	console.log("Current user Details :", currentUser);
-	//To initialize dashboard by default on entering home page
-	$(".dashboardTab").show();
-	dashboardFeed();
-	// $(".myClubsTab").show();
+//Window events Start
+$(window).on("load", (event) => {
+	setCurrentUser().then(() => {
+		console.log("Current user Details :", currentUser);
+		//To change Status for current user
+		$.ajax({
+			type: "POST",
+			url: "Api/changeUserStatus.php",
+			data: {
+				UserId: currentUser.Id,
+				Status: 'active',
+			},
+			success: async function (result, status, xhr) {
+				response = JSON.parse(result);
+
+			},
+		});
+
+		//To initialize dashboard by default on entering home page
+		$(".dashboardTab").show();
+		dashboardFeed();
+		// $(".myClubsTab").show();
+		// $(".myClubsCard").hide();
+	});
 });
+
+$(window).on('beforeunload', function () {
+	$.ajax({
+		type: "POST",
+		url: "Api/changeUserStatus.php",
+		data: {
+			UserId: currentUser.Id,
+			Status: 'inactive',
+		},
+		success: async function (result, status, xhr) {
+			response = JSON.parse(result);
+
+		},
+	});
+});
+
+//Window events Start
 
 let makeActive = function (event) {
 	//console.log(event) ;
@@ -59,7 +94,6 @@ let makeActive = function (event) {
 	});
 	let currentId = event.target.id;
 	if (currentId != "myClubs") {
-		console.log("Not myclubs");
 		clearInterval(IntervalId);
 	}
 	//console.log(event.target);
@@ -281,18 +315,40 @@ async function enterClub(elementId) {
 	});
 
 	if (curActiveClub.Id != clubId) {
-		//Changing Glocal active club to the new one
+		//Changing Global active club to the new one by resetting it.
 
 		curActiveClub.Id = clubId;
 		curActiveClub.Name = document.getElementById(`my_clubName-${clubId}`).innerText;
 		curActiveClub.AllMessages = [];
+		curActiveClub.AllMembers = [];
+		//Api call to get all memebers of club and initiate them in nonactive section
+		let allMembers = []
+		//Resetting the chatbox and Activeusers section.
 		document.getElementById("chatboxBody").innerHTML = "";
+		document.getElementById("activeUsersWrapper").innerHTML = "";
+		document.getElementById("inactiveUsersWrapper").innerHTML = "";
 		console.log("Active Club Changed ->", curActiveClub);
 
 		document.getElementById("chatboxHeader").innerHTML = curActiveClub.Name;
-	}
+		await $.ajax({
+			type: "POST",
+			url: "Api/getAllMembersOfClub.php",
+			data: {
+				ClubId: clubId,
+			},
+			success: async function (result, status, xhr) {
+				result = JSON.parse(result);
+				allMembers = result.Members;
+			},
+		});
+		curActiveClub.AllMembers = allMembers;
+		allMembers.forEach(member => {
+			appendMemberInClub(member);
+		});
 
-	IntervalId = window.setInterval(loadAllClubMessages, 4000);
+	}
+	loadAllClubMessages();
+	IntervalId = window.setInterval(loadAllClubMessages, 5000);
 
 }
 
@@ -365,25 +421,69 @@ async function appendMessageToChatBox(messageObj) {
 
 }
 
+async function appendMemberInClub(member) {
+	let parent;
+	if (member.Status == 'active') {
+		parent = document.getElementById("activeUsersWrapper");
+	}
+	else {
+		parent = document.getElementById("inactiveUsersWrapper");
+	}
+	// console.log("AppendMemberInClub", member);
+	let child = document.createElement("div");
+	child.classList.add("clubMember");
+	child.id = "clubMember-" + member.Id;
+	child.innerHTML = `
+		<div class="userStatus"></div>
+		<img src="${member.ProfilePic}" alt="">
+		<span>${member.FirstName + " " + member.LastName}</span>
+	`;
+	parent.appendChild(child);
+
+
+}
+
 async function loadAllClubMessages() {
-	let response;
-	await $.ajax({
+	$.ajax({
 		type: "POST",
-		url: "Api/getAllMessagesOfClub.php",
+		url: "Api/getAllDataOfClub.php",
 		data: {
 			ClubId: curActiveClub.Id
 		},
 		success: async function (result, status, xhr) {
-			response = JSON.parse(result);
+			let response = JSON.parse(result);
+			console.log("LoadingClub", response);
+			let receivedMessages = response.messages;
+			let receivedMembers = response.AllMembers;
+
+			//Updating messages.
+			for (let i = curActiveClub.AllMessages.length; i < receivedMessages.length; i++) {
+				appendMessageToChatBox(receivedMessages[i]);
+			}
+
+			//Updating activeMembers
+			for (let i = 0; i < receivedMembers.length; i++) {
+
+				if (i >= curActiveClub.AllMembers.length) {
+					curActiveClub.AllMembers.push(receivedMembers[i])
+					appendMemberInClub(receivedMembers[i]);
+				}
+				if (receivedMembers[i].Status != curActiveClub.AllMembers[i].Status) {
+					console.log("Status Changed", receivedMembers[i]);
+					//changing the status in global variable.
+					curActiveClub.AllMembers[i].Status = receivedMembers[i].Status;
+					console.log("After Updating-->", curActiveClub.AllMembers);
+					//Rerendering based on changed status
+					await document.getElementById("clubMember-" + receivedMembers[i].Id).remove();
+					appendMemberInClub(receivedMembers[i]);
+
+				}
+
+			}
 
 		},
 	});
-	// console.log("LoadingClub", response);
-	let receivedMessages = response.messages;
 
-	for (let i = curActiveClub.AllMessages.length; i < receivedMessages.length; i++) {
-		appendMessageToChatBox(receivedMessages[i]);
-	}
 }
 
 async function closeClub() {
@@ -471,6 +571,18 @@ async function logoutUser() {
 		success: async function (result, status, xhr) {
 			console.log(result);
 			window.location.replace("login.html");
+		},
+	});
+	$.ajax({
+		type: "POST",
+		url: "Api/changeUserStatus.php",
+		data: {
+			UserId: currentUser.Id,
+			Status: 'inactive',
+		},
+		success: async function (result, status, xhr) {
+			response = JSON.parse(result);
+
 		},
 	});
 }
