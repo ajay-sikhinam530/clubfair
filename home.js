@@ -259,7 +259,6 @@ async function joinClub() {
 		},
 		success: async function (result, status, xhr) {
 			response = JSON.parse(result);
-
 		},
 	});
 	console.log("Join Club Response", response);
@@ -313,7 +312,7 @@ async function enterClub(elementId) {
 	allClubItems.forEach(item => {
 		item.addEventListener("click", makeClubTabActive);
 	});
-
+	clearInterval(IntervalId);
 	if (curActiveClub.Id != clubId) {
 		//Changing Global active club to the new one by resetting it.
 
@@ -321,7 +320,7 @@ async function enterClub(elementId) {
 		curActiveClub.Name = document.getElementById(`my_clubName-${clubId}`).innerText;
 		curActiveClub.AllMessages = [];
 		curActiveClub.AllMembers = [];
-		//Api call to get all memebers of club and initiate them in nonactive section
+
 		let allMembers = []
 		//Resetting the chatbox and Activeusers section.
 		document.getElementById("chatboxBody").innerHTML = "";
@@ -330,6 +329,8 @@ async function enterClub(elementId) {
 		console.log("Active Club Changed ->", curActiveClub);
 
 		document.getElementById("chatboxHeader").innerHTML = curActiveClub.Name;
+
+		//Api call to get all memebers of club and initiate them.
 		await $.ajax({
 			type: "POST",
 			url: "Api/getAllMembersOfClub.php",
@@ -337,6 +338,7 @@ async function enterClub(elementId) {
 				ClubId: clubId,
 			},
 			success: async function (result, status, xhr) {
+				console.log(result);
 				result = JSON.parse(result);
 				allMembers = result.Members;
 			},
@@ -347,7 +349,7 @@ async function enterClub(elementId) {
 		});
 
 	}
-	loadAllClubMessages();
+	await loadAllClubMessages();
 	IntervalId = window.setInterval(loadAllClubMessages, 5000);
 
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'dbcon.php';
 $username=$_POST['username'];
 $password=$_POST['password'];
@@ -21,7 +22,6 @@ if($result->num_rows==1)
         {
             $response->status="true";
             $response->message="login successful";
-            session_start();
             $_SESSION['USER'] = $row;
             
         }

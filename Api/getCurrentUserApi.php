@@ -1,8 +1,9 @@
 <?php 
+session_start();
 $response=new stdClass();
 $response->status="";
 $response->message="";
-session_start();
+
 if (isset($_SESSION['USER'])) {
     $user = $_SESSION['USER'];
     $response->status="true";
