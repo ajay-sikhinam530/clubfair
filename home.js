@@ -9,7 +9,8 @@ var curActiveClub = {
 	Id: "",
 	Name: "",
 	AllMessages: [],
-	AllMembers: []
+	AllMembers: [],
+	AllEvents: []
 };
 
 var IntervalId;
@@ -142,6 +143,8 @@ let makeClubTabActive = function (event) {
 			break;
 		case "eventsTab":
 			document.getElementById("clubEvents").classList.remove("inactiveClub-tab");
+			$(".eventsWrapper").show();
+			$(".createEventWrapper").hide();
 			break;
 		case "extrasTab":
 			document.getElementById("clubExtras").classList.remove("inactiveClub-tab");
@@ -286,7 +289,7 @@ async function displayMemberClubs() {
 		response.allClubs.forEach((club) => {
 			let clubElement = document.createElement("div");
 			clubElement.classList.add("my_club");
-
+			clubElement.id = "myClub-" + club.Id;
 			clubElement.innerHTML = `
         <div>
             <span>Name:</span><span id="my_clubName-${club.Id}">${club.Name}</span><br>
@@ -294,7 +297,7 @@ async function displayMemberClubs() {
             <span>Description:</span><span id="my_clubDescription-${club.Id}">${club.Description}</span>
         </div>
         <button id="my_clubEnter-${club.Id}" onclick="enterClub(this.id)">Enter</button>
-		<button id="my_clubLeave-${club.Id}">Leave</button>
+		<button id="my_clubLeave-${club.Id}" onclick="leaveClub(this.id)">Leave</button>
     `;
 
 			myClubsCard.appendChild(clubElement);
@@ -313,6 +316,7 @@ async function enterClub(elementId) {
 		item.addEventListener("click", makeClubTabActive);
 	});
 	clearInterval(IntervalId);
+	document.getElementById('eventsWrapper').innerHTML = "";
 	if (curActiveClub.Id != clubId) {
 		//Changing Global active club to the new one by resetting it.
 
@@ -320,6 +324,7 @@ async function enterClub(elementId) {
 		curActiveClub.Name = document.getElementById(`my_clubName-${clubId}`).innerText;
 		curActiveClub.AllMessages = [];
 		curActiveClub.AllMembers = [];
+		curActiveClub.AllEvents = [];
 
 		let allMembers = []
 		//Resetting the chatbox and Activeusers section.
@@ -350,7 +355,28 @@ async function enterClub(elementId) {
 
 	}
 	await loadAllClubMessages();
+	await loadAllEvents();
 	IntervalId = window.setInterval(loadAllClubMessages, 5000);
+
+}
+
+async function leaveClub(Id) {
+	if (confirm("Do you want to leave the club?") == true) {
+		clubId = Id.slice(-1);
+		await $.ajax({
+			type: "POST",
+			url: "Api/leaveClub.php",
+			data: {
+				UserId: currentUser.Id,
+				ClubId: clubId
+			},
+			success: async function (result, status, xhr) {
+				response = JSON.parse(result);
+				let leftClub = document.getElementById("myClub-" + clubId);
+				leftClub.remove();
+			},
+		});
+	}
 
 }
 
@@ -487,6 +513,131 @@ async function loadAllClubMessages() {
 	});
 
 }
+//For events tab in myclubs
+async function loadAllEvents() {
+	await $.ajax({
+		type: "POST",
+		url: "Api/getAllEventsOfClub.php",
+		data: {
+			ClubId: curActiveClub.Id
+		},
+		success: async function (result, status, xhr) {
+			result = JSON.parse(result);
+			console.log("Events->", result.allEvents);
+			curActiveClub.AllEvents = result.allEvents;
+			curActiveClub.AllEvents.forEach(event => {
+				let child = document.createElement('div');
+				child.classList.add('eventCard');
+				child.innerHTML = `
+					Name: ${event.Name} <br>
+					Venue: ${event.Venue} <br>
+					Date/Time:${event.Date + " " + event.Time} <br>
+					Description: <br>
+					&emsp;${event.Description}
+					<br>
+					<div class=" organizer paricipantsWrapper">
+						<h6 style="margin-left: 10px; color: rgb(192, 78, 78);">Organizer</h6>
+						<div class="participant">
+							<img src="${event.OrganizerPic}" alt="">
+							<span>${event.OrganizerName}</span>
+						</div>
+					</div>
+					<button onclick="enrollEvent(this.id)" id="Enroll-${event.Id}" >Enroll</button>
+					<button onclick="viewEventParticipants(this.id)" id="viewparticipants-${event.Id}">View Participants</button>
+					<div class="paricipantsWrapper" id="paricipantsWrapper-${event.Id}">
+					</div>
+				`;
+
+				let parent = document.getElementById('eventsWrapper');
+				parent.appendChild(child);
+
+			});
+		},
+	});
+}
+
+function displayCreateEvent() {
+	$(".eventsWrapper").hide();
+	$(".createEventWrapper").show();
+	console.log("button clicked");
+}
+
+function displayShowEvent() {
+	$(".eventsWrapper").show();
+	$(".createEventWrapper").hide();
+	console.log("button clicked");
+}
+
+async function createClubEvent() {
+	let eventName = $('#eventName').val();
+	let eventVenue = $('#eventVenue').val();
+	let eventDate = $('#eventDate').val();
+	let eventTime = $('#eventTime').val();
+	let eventDescription = $('#eventDescription').val();
+
+	await $.ajax({
+		type: "POST",
+		url: "Api/createClubEvent.php",
+		data: {
+			Name: eventName,
+			Venue: eventVenue,
+			Date: eventDate,
+			Time: eventTime,
+			Description: eventDescription,
+			OrganizerId: currentUser.Id,
+			OrganizerName: currentUser.FirstName + currentUser.LastName,
+			OrganizerPic: currentUser.ProfilePic,
+			ClubId: curActiveClub.Id
+		},
+		success: async function (result, status, xhr) {
+			console.log(result);
+			result = JSON.parse(result);
+		},
+	});
+
+}
+
+async function enrollEvent(Id) {
+	let eventId = Id.slice(-1);
+	await $.ajax({
+		type: "POST",
+		url: "Api/enrollEvent.php",
+		data: {
+			EventId: eventId,
+			UserId: currentUser.Id,
+			UserName: currentUser.FirstName + " " + currentUser.LastName,
+			UserPic: currentUser.ProfilePic
+		},
+		success: async function (result, status, xhr) {
+			console.log("Enrolled successfully.");
+		},
+	});
+}
+
+async function viewEventParticipants(Id) {
+	let eventId = Id.slice(-1);
+	await $.ajax({
+		type: "POST",
+		url: "Api/getEventParticipants.php",
+		data: {
+			EventId: eventId,
+		},
+		success: async function (result, status, xhr) {
+			result = JSON.parse(result);
+			let parent = document.getElementById("paricipantsWrapper-" + eventId);
+			parent.innerHTML = "";
+			result.allParticipants.forEach(participant => {
+				let child = document.createElement("div");
+				child.classList.add("participant");
+				child.innerHTML = `
+						<img src="${participant.UserPic}" alt="">
+						<span>${participant.UserName}</span>
+				`;
+				parent.appendChild(child);
+			});
+		},
+	});
+}
 
 async function closeClub() {
 	$("#myClubEnteredTab").hide();
@@ -621,7 +772,7 @@ async function dashboardFeed() {
 						<div><h5>Description:</h5></div><p>${club.Description}</p>
 					</div>
 					<div class="dashboard-clubOperations">
-						<button>Join Club</button>
+						<button id="dashboardClub-${club.Id}" onclick="joinClubFromFeed(this.id)">Join Club</button>
 					</div>
 				</div>
 				<div class="dashboard-clubOwner">
@@ -633,4 +784,25 @@ async function dashboardFeed() {
 
 		parentElement.appendChild(clubElement);
 	});
+}
+
+async function joinClubFromFeed(Id) {
+	let response;
+	let clubId = Id.slice(-1);
+	await $.ajax({
+		type: "POST",
+		url: "Api/joinClubApi.php",
+		data: {
+			ClubId: clubId,
+			UserId: currentUser.Id,
+		},
+		success: async function (result, status, xhr) {
+			response = JSON.parse(result);
+		},
+	});
+	console.log("Join Club Response", response);
+	alert(response.message);
+	let elementId = "dashboardClubItem-" + clubId;
+	let joinedClub = document.getElementById(elementId);
+	joinedClub.remove();
 }

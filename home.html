@@ -210,7 +210,23 @@
                             </div>
                         </div>
                         <div class="clubTab inactiveClub-tab" id="clubEvents">
-                            Club Events
+                            <button class="eventButton" onclick="displayCreateEvent()">Create Event</button>
+                            <button class="eventButton" onclick="displayShowEvent()">Show Events</button>
+                            <div class="createEventWrapper">
+                                <label for="name">Name :</label>
+                                <input type="text" name="name" id="eventName"><br>
+                                <label for="venue">Venue :</label>
+                                <input type="text" name="venue" id="eventVenue"><br>
+                                <label for="date">Date :</label>
+                                <input type="date" name="date" id="eventDate"><br>
+                                <label for="time">Time :</label>
+                                <input type="time" name="time" id="eventTime"><br>
+                                <label for="description">Describe Event :</label><br>
+                                <textarea name="description" id="eventDescription" cols="30" rows="10"></textarea><br>
+                                <button onclick="createClubEvent()">Done</button>
+                            </div>
+                            <div class="eventsWrapper" id="eventsWrapper"></div>
+                            
                         </div>
                         <div class="clubTab inactiveClub-tab" id="clubExtras" >
                             Club Extras
@@ -219,24 +235,9 @@
                     <div class="activeUsersCard">
                         <h3>Active Users</h3>
                         <div class="usersWrapper">
-                            <div class="activeUsersWrapper" id="activeUsersWrapper">
-                                <div class="clubMember" id="clubMember-2">
-                                    <div class="userStatus"></div>
-                                    <img src="./Api/ProfilePictures/empty.jpg" alt="">
-                                    <span>Ajay kumar Sikhinam</span>
-                                </div>
-                                
-                            </div>
-                            <div class="inactiveUsersWrapper" id="inactiveUsersWrapper">
-                                <div class="clubMember">
-                                    <div class="userStatus"></div>
-                                    <img src="./Api/ProfilePictures/empty.jpg" alt="">
-                                    <span>Ajay kumar Sikhinam</span>
-                                </div>
-                            </div>
+                            <div class="activeUsersWrapper" id="activeUsersWrapper"></div>
+                            <div class="inactiveUsersWrapper" id="inactiveUsersWrapper"></div>
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>
