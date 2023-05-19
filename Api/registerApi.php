@@ -15,8 +15,8 @@ include("dbcon.php");
 
  $token=uniqid("",true);
 
-$q= "insert into registereduserdetails(FirstName,LastName,MobileNumber,Email,Password,Token, ProfilePic) values('$firstname','$lastname','$phonenumber','$email','$pass','$token',./Api/ProfilePictures/empty.jpg)";
-  
+$q= "insert into registereduserdetails(FirstName,LastName,MobileNumber,Email,Password,Token, ProfilePic) values('$firstname','$lastname','$phonenumber','$email','$pass','$token','./Api/ProfilePictures/empty.jpg')";
+
  
 mysqli_query($connection,$q);
 

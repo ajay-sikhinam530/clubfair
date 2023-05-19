@@ -296,8 +296,8 @@ async function displayMemberClubs() {
             <span>Category:</span><span id="my_clubCategory-${club.Id}">${club.Categories}</span><br>
             <span>Description:</span><span id="my_clubDescription-${club.Id}">${club.Description}</span>
         </div>
-        <button id="my_clubEnter-${club.Id}" onclick="enterClub(this.id)">Enter</button>
-		<button id="my_clubLeave-${club.Id}" onclick="leaveClub(this.id)">Leave</button>
+        <button class= "clubButton" id="my_clubEnter-${club.Id}" onclick="enterClub(this.id)">Enter</button>
+		<button class= "clubButton" id="my_clubLeave-${club.Id}" onclick="leaveClub(this.id)">Leave</button>
     `;
 
 			myClubsCard.appendChild(clubElement);

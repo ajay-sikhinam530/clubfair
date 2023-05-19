@@ -547,7 +547,9 @@ form input {
   align-items: center;
   background-color: rgb(237, 235, 185);
   width: 95%;
-  border: 0.1em solid black;
+  border: 0.1em solid rgb(156, 153, 58);
+  border-radius: 20px;
+  padding-left: 20px;
   height: 8em;
   margin: 2.5%;
 }
@@ -559,6 +561,16 @@ form input {
   border-radius: 5px;
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.clubButton {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: #4c63b6;
+  margin-left: 50px;
+  width: 80px;
+  height: 30px;
 }
 
 .activeUsersCard h3 {
@@ -961,10 +973,23 @@ textarea::-webkit-scrollbar {
 
 .dashboard-clubOperations {
   position: relative;
-  background-color: rgb(217, 217, 240);
+  background-color: rgb(235, 207, 207);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   min-height: 29vh;
   width: 30%;
+}
+
+.dashboard-clubOperations Button {
+  height: 30px;
+  width: 120px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(120, 120, 209);
+  color: white;
+  font-size: 20px;
 }
 
 .dashboard-clubOwner {
